@@ -1,0 +1,6 @@
+---
+- name: Build a Complete RH certification KVM Guacamole Virtual Lab
+  hosts: kvmserver
+    
+  roles:
+    - role: kvm-lab
