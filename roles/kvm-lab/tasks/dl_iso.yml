@@ -30,6 +30,7 @@
   until: job_result.finished
   retries: 60  
   delay: 30 
+  when: not stat_result.stat.exists
 
 - name: Check to see if CentOS {{ centos_version }} MINIMAL ISO already exists
   stat:
@@ -62,4 +63,5 @@
   until: job_result.finished
   retries: 60
   delay: 30
+  when: not stat_result.stat.exists
 

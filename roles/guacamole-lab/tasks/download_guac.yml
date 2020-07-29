@@ -1,0 +1,85 @@
+---
+- name: Create Guacamole Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: true
+  loop: "{{ NEW_DIRS }}"
+
+### GUACAMOLE CLIENT
+- name: Check to see if Guacamole Client File already exists
+  stat:
+    path: "{{ INSTALL_DIR }}client/{{ GUAC_CLIENT }}.war"
+  register: file_info
+
+- name: Download Guacamole Client Stable Release Archive
+  get_url:
+    url: "{{ GUAC_URL }}binary/{{ GUAC_CLIENT }}.war"
+    dest: "{{ INSTALL_DIR }}client/guacamole.war"
+  when: file_info.stat.exists == false
+
+- name: Copy {{ GUAC_CLIENT }} to {{ LIB_DIR}}guacamole.war
+  copy:
+    src: "{{ INSTALL_DIR }}client/guacamole.war"
+    dest: "{{ LIB_DIR }}"
+
+### GUACAMOLE SERVER
+- name: Check to see if Guacamole Server Archive already exists
+  stat:
+    path: "{{ INSTALL_DIR }}server"
+  register: file_info
+
+- name: Download and Extract Guacamole Server Archive 
+  unarchive: 
+    src: "{{ GUAC_URL }}source/{{ GUAC_SERVER }}.tar.gz"
+    dest: "{{ INSTALL_DIR }}"
+    remote_src: true
+  when: file_info.stat.exists == false
+
+- name: "Rename {{ GUAC_SERVER }} directory to server"
+  command: "mv {{ INSTALL_DIR }}{{ GUAC_SERVER }} {{ INSTALL_DIR}}server"
+  when: file_info.stat.exists == false
+
+
+### GUACAMOLE JDBC EXTENSION
+- name: Check to see if Guacamole JDBC Extension Archive already exists
+  stat:
+    path: "{{ INSTALL_DIR }}extension"
+  register: file_info
+
+- name: Download and Extract Guacamole JDBC Extension Archive
+  unarchive:
+    src: "{{ GUAC_URL }}binary/{{ GUAC_JDBC }}.tar.gz"
+    dest: "{{ INSTALL_DIR }}"
+    remote_src: true
+  when: file_info.stat.exists == false
+
+- name: "Rename {{ GUAC_JDBC }} directory to extension"
+  command: "mv {{ INSTALL_DIR }}{{ GUAC_JDBC }} {{ INSTALL_DIR }}extension"
+  when: file_info.stat.exists == false
+
+- name: "Copy guacamole-auth-jdbc-mysql-{{ GUAC_VER }}.jar {{ LIB_DIR }}extensions/"
+  copy:
+    src: "{{ INSTALL_DIR }}extension/mysql/guacamole-auth-jdbc-mysql-{{ GUAC_VER }}.jar"
+    dest: "{{ LIB_DIR }}extensions/"
+  when: file_info.stat.exists == false
+
+
+### MYSQL CONNECTOR
+- name: Check to see if MySQL Connector Archive already exists
+  stat:
+    path: "{{ INSTALL_DIR }}{{ MYSQL_CON }}"
+  register: file_info
+
+- name: Download and Extract MySQL Connector Archive
+  unarchive:
+    src: "{{ MYSQL_CON_URL }}{{ MYSQL_CON }}.tar.gz"
+    dest: "{{ INSTALL_DIR }}"
+    remote_src: true
+  when: file_info.stat.exists == false
+
+- name: "Copy {{ MYSQL_CON }}/{{ MYSQL_CON }}.jar {{ LIB_DIR }}lib/"
+  copy:
+    src: "{{ INSTALL_DIR }}{{ MYSQL_CON }}/{{ MYSQL_CON }}.jar"
+    dest: "{{ LIB_DIR }}lib/"
+  when: file_info.stat.exists == false

@@ -1,0 +1,24 @@
+---
+- name: Configure Guacamole with systemd 
+  command: "./configure --with-systemd-dir=/etc/systemd/system"
+  args:
+    chdir: "{{ INSTALL_DIR }}server"
+  become: true
+
+- name: Run Make
+  command: make
+  args:
+    chdir: "{{ INSTALL_DIR }}server"
+  become: true
+
+- name: Run Make Install
+  make:
+    chdir: "{{ INSTALL_DIR }}server"
+    target: install
+  become: true
+
+- name: Run ldconfig
+  command: ldconfig
+  args:
+    chdir: "{{ INSTALL_DIR }}server"  
+  become: true

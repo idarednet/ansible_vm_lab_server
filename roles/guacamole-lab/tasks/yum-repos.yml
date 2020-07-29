@@ -1,0 +1,32 @@
+---
+- name: Enable EPEL YUM Repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    file: virtual_lab_repos
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Enable RPMFusion Free Repo
+  yum_repository:
+    name: rpmfusion-free-updates
+    description: "RPM Fusion - Free - Updates"
+    file: virtual_lab_repos
+    mirrorlist: http://mirrors.rpmfusion.org/mirrorlist?repo=free-el-updates-released-$releasever&arch=$basearch
+    gpgkey: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-el-$releasever
+
+- name: Enable NGINX Repo
+  yum_repository:
+    name: nginx
+    description: NGINX Stable repo
+    file: virtual_lab_repos
+    baseurl: https://nginx.org/packages/centos/$releasever/$basearch/
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    
+- name: Enable LIBJPEG-TURBO Repo
+  yum_repository:
+    name: libjpeg-turbo
+    description: LIGJPEG-TURBO official RPMs
+    file: virtual_lab_repos
+    baseurl: https://sourceforge.net/projects/libjpeg-turbo/files
+    gpgkey: https://sourceforge.net/projects/libjpeg-turbo/files/LJT-GPG-KEY
+    exclude: libjpeg-turbo-[0-9]*

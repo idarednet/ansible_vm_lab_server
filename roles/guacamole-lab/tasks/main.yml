@@ -1,0 +1,6 @@
+---
+- include_tasks: pre-checks.yml
+- include_tasks: yum-repos.yml 
+- include_tasks: yum-install.yml
+- include_tasks: download_guac.yml
+- include_tasks: install_guac.yml

@@ -1,0 +1,19 @@
+---
+- name: Check SELinux Enforcing Mode
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Firewalld Service is present
+  yum:
+    name: firewalld
+    state: present
+
+#- name: Retrieve the GIT release version of Guacamole
+#  shell: "curl -s https://raw.githubusercontent.com/apache/guacamole-server/master/configure.ac | grep 'AC_INIT([guacamole-server]*' | awk -F'[][]' -v n=2 '{ print $(2*n) }'"
+#  args:
+#    warn: false
+#  register: guac_git_version
+#  changed_when: false
+
+#- debug: var=guac_git_version.stdout
