@@ -1,5 +1,0 @@
----
-- name: Install Required Dependencies
-  yum:
-    name: "{{ REQUIRED_DEPENDENCIES }}"
-
