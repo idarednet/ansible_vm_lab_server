@@ -4,6 +4,6 @@
   become: true
     
   roles:
-    - role: guacamole-lab
+    - role: ansible_role_guacamole
       when: ansible_os_family == 'RedHat'
 #    - role: kvm-lab
