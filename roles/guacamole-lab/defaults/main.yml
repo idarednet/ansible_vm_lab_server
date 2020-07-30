@@ -11,8 +11,10 @@ MYSQL_CON_VER: "8.0.20"
 MYSQL_CON: "mysql-connector-java-{{ MYSQL_CON_VER }}"
 
 # PORTS
-#GUAC_PORT: "4822"
-#MYSQL_PORT: "3306"
+GUAC_PORT: "4822"
+GUAC_HOSTNAME: localhost
+MYSQL_PORT: "3306"
+MYSQL_HOSTNAME: localhost
 
 # KEY SIZES
 #JKSTORE_KEY_SIZE_DEF: "4096" # Default Java Keystore key-size
@@ -20,10 +22,10 @@ MYSQL_CON: "mysql-connector-java-{{ MYSQL_CON_VER }}"
 #SSL_KEY_SIZE_DEF: "4096" # Default Self-signed SSL key-size
 
 # DEFAULT CREDENTIALS
-#MYSQL_PASSWD_DEF: "guacamole" # Default MySQL/MariaDB root password
-#DB_NAME_DEF: "guac_db" # Default database name
-#DB_USER_DEF: "guac_adm" # Default database user name
-#DB_PASSWD_DEF: "guacamole" # Default database password
+GUACD_USER: "guacd"
+DB_NAME: "guac_db" # Default database name
+DB_USER: "guac_adm" # Default database user name
+DB_PASSWD: "guacamole" # Default database password
 #JKS_GUAC_PASSWD_DEF: "guacamole" # Default Java Keystore password
 #JKS_CACERT_PASSWD_DEF: "guacamole" # Default CACert Java Keystore password, used with LDAPS
 
@@ -31,8 +33,8 @@ MYSQL_CON: "mysql-connector-java-{{ MYSQL_CON_VER }}"
 GUAC_URL: "https://apache.org/dyn/closer.cgi?action=download&filename=guacamole/{{ GUAC_VER }}/"
 MYSQL_CON_URL: "https://dev.mysql.com/get/Downloads/Connector-J/"
 
-# DIR & FILE NAMES
-#GUAC_CONF: "guacamole.properties" # Guacamole configuration/properties file
+# FILE NAMES
+GUAC_CONF: "guacamole.properties" # Guacamole configuration/properties file
 #MYSQL_CON: "mysql-connector-java-${MYSQL_CON_VER}"
 
 
@@ -66,8 +68,10 @@ REQUIRED_DEPENDENCIES:
   - setroubleshoot
   - tomcat
   - uuid-devel
+  - python2-pip
 
 ## DIRECTORIES
+GUAC_CONF_DIR: "/etc/guacamole/"
 LIB_DIR: "/var/lib/guacamole/"
 INSTALL_DIR:  "/usr/local/src/guacamole/{{ GUAC_VER }}/"
 NEW_DIRS:
