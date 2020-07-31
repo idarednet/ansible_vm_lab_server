@@ -2,7 +2,7 @@
 - name: Build a Complete RH certification KVM Guacamole Virtual Lab
   hosts: kvmserver
   become: true
-    
+
   roles:
     - role: ansible_role_guacamole
       when: ansible_os_family == 'RedHat'
