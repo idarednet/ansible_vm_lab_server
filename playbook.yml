@@ -4,6 +4,9 @@
   become: true
 
   roles:
-    - role: ansible_role_guacamole
+    #- role: ansible_role_guacamole
+    #  when: ansible_os_family == 'RedHat'
+    - role: ansible_role_kvm
       when: ansible_os_family == 'RedHat'
-#    - role: kvm-lab
+    #- role: ansible_role_cobbler
+    #  when: ansible_os_family == 'RedHat'
